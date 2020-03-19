@@ -1,21 +1,30 @@
-package TPList;
 
-public class List {
-    private Object info;
-    private List suiv;
+
+public class Linked_List {
+    private class Element{
+        public Object info;
+        public Element next;
+
+    }
+    private Element head;
     private int length;
 
-    public List(){
-        this.suiv = null;
+
+    public Linked_List(){
+
+        head = null;
         this.length = 0;
+
     }
 
     public void insertAT(Object info,int pos){
-        if(est_vide()){
-            List elem = new List();
+        if(is_empty()){
+
+            Element elem = new Element();
             elem.info = info;
-            this.suiv = elem;
-            elem.suiv = null;
+
+            head = elem;
+            elem.next = null;
             length++;
         }else{
             if(pos<=length){
@@ -27,7 +36,8 @@ public class List {
         }
     }
     public Object acces(int pos){
-        List x = this.suiv;
+
+        Element x = head;
         if(pos<length){
             for(int i=0;i<pos;i++){
                 x = next(x);
@@ -38,33 +48,33 @@ public class List {
         return x.info;
     }
 
-    public List next(List l){return l.suiv;}
+    private Element next(Element l){return l.next;}
 
     private void add(Object info,int pos ){
         length++;
-        List l = new List();
-        l.info = info;
-        l.suiv=null;
 
-        List x = this.suiv;
-        List y = x;
+        Element l = new Element();
+        l.info = info;
+        l.next=null;
+
+        Element x = head;
 
         if(pos==0){
-            l.suiv = this.suiv;
-            this.suiv = l;
+            l.next = head;
+            head = l;
         }else{
-            for(int i =0;i<pos;i++){
-                y = x;
-                x = x.suiv;
+            for(int i =0;i<pos-1;i++){
+                x = next(x);
             }
-            l.suiv = y.suiv;
-            y.suiv = l;
+
+            l.next = x.next;
+            x.next = l;
         }
 
     }
 
 
-    public boolean est_vide(){
+    public boolean is_empty(){
         return this.length == 0;
     }
     public int Length(){return this.length;}
